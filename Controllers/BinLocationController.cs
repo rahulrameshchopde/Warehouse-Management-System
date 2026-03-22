@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Mvc;
 
-using Microsoft.AspNetCore.Mvc;
-
-using WarehouseProject.DTOs;
+using WarehouseProject.Models;
 
 using WarehouseProject.Services;
 
@@ -10,17 +8,17 @@ namespace WarehouseProject.Controllers
 
 {
 
-    [ApiController]
-
     [Route("api/[controller]")]
 
-    [Authorize]
+    [ApiController]
 
     public class BinLocationController : ControllerBase
 
     {
 
         private readonly IBinLocationService _service;
+
+        // ✅ Inject INTERFACE (IMPORTANT)
 
         public BinLocationController(IBinLocationService service)
 
@@ -30,33 +28,79 @@ namespace WarehouseProject.Controllers
 
         }
 
+        // ✅ GET ALL
+
         [HttpGet]
 
         public async Task<IActionResult> GetAll()
 
         {
 
-            var bins = await _service.GetAll();
+            var result = await _service.GetAll();
 
-            return Ok(bins);
+            return Ok(result);
 
         }
 
-        [Authorize(Roles = "Admin")]
+        // ✅ GET BY ID
 
-        [HttpPost]
+        [HttpGet("{id}")]
 
-        public async Task<IActionResult> Create(BinLocationDTO dto)
+        public async Task<IActionResult> GetById(int id)
 
         {
 
-            var bin = await _service.Create(dto);
+            var result = await _service.GetById(id);
 
-            return Ok(bin);
+            if (result == null)
+
+                return NotFound("Data not found");
+
+            return Ok(result);
 
         }
 
-        [Authorize(Roles = "Admin")]
+        // ✅ CREATE
+
+        [HttpPost]
+
+        public async Task<IActionResult> Create([FromBody] BinLocationModel model)
+
+        {
+
+            if (!ModelState.IsValid)
+
+                return BadRequest(ModelState);
+
+            var result = await _service.Create(model);
+
+            return Ok(result);
+
+        }
+
+        // ✅ UPDATE
+
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> Update(int id, [FromBody] BinLocationModel model)
+
+        {
+
+            if (!ModelState.IsValid)
+
+                return BadRequest(ModelState);
+
+            var result = await _service.Update(id, model);
+
+            if (result == null)
+
+                return NotFound("Data not found");
+
+            return Ok(result);
+
+        }
+
+        // ✅ DELETE
 
         [HttpDelete("{id}")]
 
@@ -68,9 +112,9 @@ namespace WarehouseProject.Controllers
 
             if (!result)
 
-                return NotFound();
+                return NotFound("Data not found");
 
-            return Ok("Bin deleted");
+            return Ok("Deleted Successfully");
 
         }
 

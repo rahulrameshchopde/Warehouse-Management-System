@@ -1,84 +1,134 @@
-﻿using WarehouseProject.Data;
-using WarehouseProject.DTOs;
+﻿using WarehousePro.API.DTOs.Warehouse;
+using WarehouseProject.Data;
 using WarehouseProject.Models;
 using Microsoft.EntityFrameworkCore;
+public class WarehouseService : IWarehouseService
 
-namespace WarehouseProject.Services.Warehouse_Layout_Location_Management
 {
 
-        public class WarehouseService : IWarehouseService
+    private readonly WarehouseDBContext _context;
+
+    public WarehouseService(WarehouseDBContext context)
+
+    {
+
+        _context = context;
+
+    }
+
+    public async Task<List<WarehouseResponseDto>> GetAllAsync()
+
+    {
+
+        return await _context.Warehouses
+
+            .Include(w => w.Zones)
+
+            .Select(w => MapToResponseDto(w))
+
+            .ToListAsync();
+
+    }
+
+    public async Task<WarehouseResponseDto?> GetByIdAsync(int id)
+
+    {
+
+        var warehouse = await _context.Warehouses
+
+            .Include(w => w.Zones)
+
+            .FirstOrDefaultAsync(w => w.WarehouseID == id);
+
+        return warehouse == null ? null : MapToResponseDto(warehouse);
+
+    }
+
+    public async Task<WarehouseResponseDto> CreateAsync(WarehouseCreateDto dto)
+
+    {
+
+        var warehouse = new WarehouseModel
 
         {
 
-            private readonly WarehouseDBContext _context;
+            Name = dto.Name,
 
-            public WarehouseService(WarehouseDBContext context)
+            Location = dto.Location,
 
-            {
 
-                _context = context;
+        };
 
-            }
+        _context.Warehouses.Add(warehouse);
 
-            public async Task<IEnumerable<WarehouseModel>> GetAll()
+        await _context.SaveChangesAsync();
 
-            {
-
-                return await _context.Warehouses.ToListAsync();
-
-            }
-
-            public async Task<WarehouseModel> GetById(int id)
-
-            {
-
-                return await _context.Warehouses.FindAsync(id);
-
-            }
-
-            public async Task<WarehouseModel> Create(WarehouseDTO dto)
-
-            {
-
-                var warehouse = new WarehouseModel
-
-                {
-
-                    Name = dto.Name,
-
-                    Location = dto.Location,
-
-                    Status = dto.Status
-
-                };
-
-                _context.Warehouses.Add(warehouse);
-
-                await _context.SaveChangesAsync();
-
-                return warehouse;
-
-            }
-
-            public async Task<bool> Delete(int id)
-
-            {
-
-                var warehouse = await _context.Warehouses.FindAsync(id);
-
-                if (warehouse == null)
-
-                    return false;
-
-                _context.Warehouses.Remove(warehouse);
-
-                await _context.SaveChangesAsync();
-
-                return true;
-
-            }
-
-        }
+        return MapToResponseDto(warehouse);
 
     }
- 
+
+    public async Task<WarehouseResponseDto> UpdateAsync(int id, WarehouseUpdateDto dto)
+
+    {
+
+        var warehouse = await _context.Warehouses.FindAsync(id);
+
+        if (warehouse == null)
+
+            throw new Exception("Warehouse not found");
+
+        warehouse.Name = dto.Name;
+
+        warehouse.Location = dto.Location;
+
+        warehouse.Status = dto.Status;
+
+        await _context.SaveChangesAsync();
+
+        return MapToResponseDto(warehouse);
+
+    }
+
+    public async Task<bool> DeleteAsync(int id)
+
+    {
+
+        var warehouse = await _context.Warehouses.FindAsync(id);
+
+        if (warehouse == null)
+
+            return false;
+
+        _context.Warehouses.Remove(warehouse);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+
+    }
+
+    private WarehouseResponseDto MapToResponseDto(WarehouseModel w)
+
+    {
+
+        return new WarehouseResponseDto
+
+        {
+
+            WarehouseID = w.WarehouseID,
+
+            Name = w.Name,
+
+            Location = w.Location,
+
+            Status = w.Status.ToString(),
+
+            CreatedAt = DateTime.UtcNow,
+
+            TotalZones = w.Zones != null ? w.Zones.Count : 0
+
+        };
+
+    }
+
+}

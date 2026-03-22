@@ -26,7 +26,70 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.WarehousePro.Controllers.AuthController",
+    "ContainingType": "WarehouseProject.Controllers.AuthController",
+    "Method": "GetAllUsers",
+    "RelativePath": "api/Auth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.AuthController",
+    "Method": "GetUser",
+    "RelativePath": "api/Auth/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.AuthController",
+    "Method": "UpdateUser",
+    "RelativePath": "api/Auth/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "WarehouseProject.DTOs.RegisterUserDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.AuthController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/Auth/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
     "HttpMethod": "POST",
@@ -42,7 +105,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.WarehousePro.Controllers.AuthController",
+    "ContainingType": "WarehouseProject.Controllers.AuthController",
     "Method": "Register",
     "RelativePath": "api/Auth/register",
     "HttpMethod": "POST",
@@ -76,8 +139,45 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "WarehouseProject.DTOs.BinLocationDTO",
+        "Name": "model",
+        "Type": "WarehouseProject.Models.BinLocationModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.BinLocationController",
+    "Method": "GetById",
+    "RelativePath": "api/BinLocation/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.BinLocationController",
+    "Method": "Update",
+    "RelativePath": "api/BinLocation/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "WarehouseProject.Models.BinLocationModel",
         "IsRequired": true
       }
     ],
@@ -110,23 +210,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.InboundReceiptController",
-    "Method": "Create",
-    "RelativePath": "api/InboundReceipt",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "WarehouseProject.DTOs.InboundReceiptDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WarehouseProject.Controllers.InboundReceiptController",
+    "ContainingType": "InboundReceiptController",
     "Method": "GetAll",
     "RelativePath": "api/InboundReceipt",
     "HttpMethod": "GET",
@@ -136,7 +220,23 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.InboundReceiptController",
+    "ContainingType": "InboundReceiptController",
+    "Method": "Create",
+    "RelativePath": "api/InboundReceipt",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WarehouseProject.DTOs.InboundReceipt.CreateInboundReceiptDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InboundReceiptController",
     "Method": "GetById",
     "RelativePath": "api/InboundReceipt/{id}",
     "HttpMethod": "GET",
@@ -152,7 +252,28 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.InboundReceiptController",
+    "ContainingType": "InboundReceiptController",
+    "Method": "Update",
+    "RelativePath": "api/InboundReceipt/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "UpdateInboundReceiptDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "InboundReceiptController",
     "Method": "Delete",
     "RelativePath": "api/InboundReceipt/{id}",
     "HttpMethod": "DELETE",
@@ -169,6 +290,16 @@
   },
   {
     "ContainingType": "WarehouseProject.Controllers.InventoryBalanceController",
+    "Method": "GetAll",
+    "RelativePath": "api/InventoryBalance",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.InventoryBalanceController",
     "Method": "Create",
     "RelativePath": "api/InventoryBalance",
     "HttpMethod": "POST",
@@ -177,20 +308,10 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "WarehouseProject.DTOs.InventoryBalanceDTO",
+        "Type": "WarehouseProject.DTOs.InventoryBalanceDTOs.CreateInventoryBalanceDTO",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WarehouseProject.Controllers.InventoryBalanceController",
-    "Method": "GetAll",
-    "RelativePath": "api/InventoryBalance",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -211,6 +332,27 @@
   },
   {
     "ContainingType": "WarehouseProject.Controllers.InventoryBalanceController",
+    "Method": "Update",
+    "RelativePath": "api/InventoryBalance/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "WarehouseProject.DTOs.UpdateInventoryBalanceDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.InventoryBalanceController",
     "Method": "Delete",
     "RelativePath": "api/InventoryBalance/{id}",
     "HttpMethod": "DELETE",
@@ -226,7 +368,39 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.ItemController",
+    "ContainingType": "WarehouseProject.Controllers.InventoryBalanceController",
+    "Method": "Pick",
+    "RelativePath": "api/InventoryBalance/pick",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WarehousePro.API.DTOs.Outbound.PickTaskCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.InventoryBalanceController",
+    "Method": "PutAway",
+    "RelativePath": "api/InventoryBalance/putaway",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WarehouseProject.DTOs.PutAwayTaskDTOs.CreatePutAwayTaskDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ItemController",
     "Method": "GetAll",
     "RelativePath": "api/Item",
     "HttpMethod": "GET",
@@ -236,7 +410,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.ItemController",
+    "ContainingType": "ItemController",
     "Method": "Create",
     "RelativePath": "api/Item",
     "HttpMethod": "POST",
@@ -245,15 +419,15 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "WarehouseProject.DTOs.ItemDTO",
+        "Type": "WarehouseProject.DTOs.itemDtos.CreateItemDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.ItemController",
-    "Method": "Get",
+    "ContainingType": "ItemController",
+    "Method": "GetById",
     "RelativePath": "api/Item/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -268,7 +442,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.ItemController",
+    "ContainingType": "ItemController",
     "Method": "Update",
     "RelativePath": "api/Item/{id}",
     "HttpMethod": "PUT",
@@ -282,14 +456,14 @@
       },
       {
         "Name": "dto",
-        "Type": "WarehouseProject.DTOs.ItemDTO",
+        "Type": "WarehouseProject.DTOs.UpdateItemDTO",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.ItemController",
+    "ContainingType": "ItemController",
     "Method": "Delete",
     "RelativePath": "api/Item/{id}",
     "HttpMethod": "DELETE",
@@ -306,66 +480,14 @@
   },
   {
     "ContainingType": "WarehouseProject.Controllers.NotificationController",
-    "Method": "GetAll",
-    "RelativePath": "api/Notification",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WarehouseProject.Controllers.NotificationController",
-    "Method": "Create",
-    "RelativePath": "api/Notification",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "notification",
-        "Type": "WarehouseProject.Models.NotificationModel",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WarehouseProject.Controllers.PackingUnitController",
-    "Method": "Create",
-    "RelativePath": "api/PackingUnit",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "WarehouseProject.DTOs.PackingUnitDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WarehouseProject.Controllers.PackingUnitController",
-    "Method": "GetAll",
-    "RelativePath": "api/PackingUnit",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WarehouseProject.Controllers.PackingUnitController",
-    "Method": "CompletePacking",
-    "RelativePath": "api/PackingUnit/complete/{packId}",
+    "Method": "MarkRead",
+    "RelativePath": "api/Notification/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "packId",
+        "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -373,25 +495,41 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.PickTaskController",
-    "Method": "Create",
-    "RelativePath": "api/PickTask",
-    "HttpMethod": "POST",
+    "ContainingType": "WarehouseProject.Controllers.NotificationController",
+    "Method": "Get",
+    "RelativePath": "api/Notification/{userId}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "WarehouseProject.DTOs.PickTaskDTO",
+        "Name": "userId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.PickTaskController",
+    "ContainingType": "OrderController",
+    "Method": "Create",
+    "RelativePath": "api/Order",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WarehouseProject.DTOs.Order.OrderCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OrderController",
     "Method": "GetAll",
-    "RelativePath": "api/PickTask",
+    "RelativePath": "api/Order",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -399,9 +537,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.PickTaskController",
+    "ContainingType": "OrderController",
     "Method": "GetById",
-    "RelativePath": "api/PickTask/{id}",
+    "RelativePath": "api/Order/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -415,9 +553,30 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.PickTaskController",
+    "ContainingType": "OrderController",
+    "Method": "Update",
+    "RelativePath": "api/Order/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "WarehouseProject.DTOs.Order.OrderUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OrderController",
     "Method": "Delete",
-    "RelativePath": "api/PickTask/{id}",
+    "RelativePath": "api/Order/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -431,25 +590,89 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.PutAwayController",
-    "Method": "Create",
-    "RelativePath": "api/PutAway",
+    "ContainingType": "OrderController",
+    "Method": "CompletePicking",
+    "RelativePath": "api/Order/complete-picking/{id}",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "dto",
-        "Type": "WarehouseProject.DTOs.PutAwayTaskDTO",
+        "Name": "id",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.PutAwayController",
+    "ContainingType": "OrderController",
+    "Method": "Deliver",
+    "RelativePath": "api/Order/deliver/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OrderController",
+    "Method": "Ship",
+    "RelativePath": "api/Order/ship/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "OrderController",
+    "Method": "StartPicking",
+    "RelativePath": "api/Order/start-picking/{id}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.PackingController",
+    "Method": "Create",
+    "RelativePath": "api/Packing",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "PackingCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.PackingController",
     "Method": "GetAll",
-    "RelativePath": "api/PutAway",
+    "RelativePath": "api/Packing",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -457,10 +680,157 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.PutAwayController",
-    "Method": "Complete",
-    "RelativePath": "api/PutAway/complete/{id}",
+    "ContainingType": "WarehouseProject.Controllers.PackingController",
+    "Method": "UpdateStatus",
+    "RelativePath": "api/Packing/status/{id}",
     "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "WarehouseProject.DTOs.Outbound.PackingStatusUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.PickTaskController",
+    "Method": "Create",
+    "RelativePath": "api/PickTask",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WarehousePro.API.DTOs.Outbound.PickTaskCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.PickTaskController",
+    "Method": "GetAll",
+    "RelativePath": "api/PickTask",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.PickTaskController",
+    "Method": "AutoCreate",
+    "RelativePath": "api/PickTask/auto/{orderId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.PickTaskController",
+    "Method": "UpdateStatus",
+    "RelativePath": "api/PickTask/status/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "WarehousePro.API.DTOs.Outbound.PickTaskUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PutAwayTaskController",
+    "Method": "GetAll",
+    "RelativePath": "api/PutAwayTask",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PutAwayTaskController",
+    "Method": "PutAway",
+    "RelativePath": "api/PutAwayTask",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WarehouseProject.DTOs.PutAwayTaskDTOs.CreatePutAwayTaskDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PutAwayTaskController",
+    "Method": "GetById",
+    "RelativePath": "api/PutAwayTask/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PutAwayTaskController",
+    "Method": "Update",
+    "RelativePath": "api/PutAwayTask/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "UpdatePutAwayTaskDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "PutAwayTaskController",
+    "Method": "Delete",
+    "RelativePath": "api/PutAwayTask/{id}",
+    "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -524,7 +894,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "WarehouseProject.DTOs.ShipmentDTO",
+        "Type": "WarehouseProject.DTOs.Outbound.ShipmentCreateDto",
         "IsRequired": true
       }
     ],
@@ -538,6 +908,27 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.ShipmentController",
+    "Method": "Update",
+    "RelativePath": "api/Shipment/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "WarehouseProject.DTOs.Outbound.ShipmentUpdateDto",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -662,7 +1053,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.WarehouseProject.Controllers.WarehouseController",
+    "ContainingType": "WarehouseProject.Controllers.WarehouseController",
     "Method": "GetAll",
     "RelativePath": "api/Warehouse",
     "HttpMethod": "GET",
@@ -672,8 +1063,24 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.WarehouseProject.Controllers.WarehouseController",
-    "Method": "Get",
+    "ContainingType": "WarehouseProject.Controllers.WarehouseController",
+    "Method": "Create",
+    "RelativePath": "api/Warehouse",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "WarehousePro.API.DTOs.Warehouse.WarehouseCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.WarehouseController",
+    "Method": "GetById",
     "RelativePath": "api/Warehouse/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -688,7 +1095,28 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.WarehouseProject.Controllers.WarehouseController",
+    "ContainingType": "WarehouseProject.Controllers.WarehouseController",
+    "Method": "Update",
+    "RelativePath": "api/Warehouse/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "WarehousePro.API.DTOs.Warehouse.WarehouseUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.WarehouseController",
     "Method": "Delete",
     "RelativePath": "api/Warehouse/{id}",
     "HttpMethod": "DELETE",
@@ -698,22 +1126,6 @@
       {
         "Name": "id",
         "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WarehouseProject.Controllers.WarehouseProject.Controllers.WarehouseController",
-    "Method": "Create",
-    "RelativePath": "api/Warehouse/Create",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "WarehouseProject.DTOs.WarehouseDTO",
         "IsRequired": true
       }
     ],
@@ -762,7 +1174,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.ZoneController",
+    "ContainingType": "ZoneController",
     "Method": "GetAll",
     "RelativePath": "api/Zone",
     "HttpMethod": "GET",
@@ -772,7 +1184,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.ZoneController",
+    "ContainingType": "ZoneController",
     "Method": "Create",
     "RelativePath": "api/Zone",
     "HttpMethod": "POST",
@@ -781,14 +1193,51 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "WarehouseProject.DTOs.ZoneDTO",
+        "Type": "WarehousePro.API.DTOs.Zone.ZoneCreateDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.ZoneController",
+    "ContainingType": "ZoneController",
+    "Method": "GetById",
+    "RelativePath": "api/Zone/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ZoneController",
+    "Method": "Update",
+    "RelativePath": "api/Zone/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "WarehousePro.API.DTOs.Zone.ZoneUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ZoneController",
     "Method": "Delete",
     "RelativePath": "api/Zone/{id}",
     "HttpMethod": "DELETE",

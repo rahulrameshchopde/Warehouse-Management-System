@@ -1,13 +1,17 @@
-﻿using WarehouseProject.DTOs;
-using WarehouseProject.Models;
+﻿using WarehousePro.API.DTOs.Warehouse;
 
-namespace WarehouseProject.Services.Warehouse_Layout_Location_Management
+public interface IWarehouseService
+
 {
-    public interface IWarehouseService
-    {
-        Task<IEnumerable<WarehouseModel>> GetAll();
-        Task<WarehouseModel> GetById(int id);
-        Task<WarehouseModel> Create(WarehouseDTO dto);
-        Task<bool> Delete(int id);
-    }
+
+    Task<List<WarehouseResponseDto>> GetAllAsync();
+
+    Task<WarehouseResponseDto?> GetByIdAsync(int id);
+
+    Task<WarehouseResponseDto> CreateAsync(WarehouseCreateDto dto);
+
+    Task<WarehouseResponseDto> UpdateAsync(int id, WarehouseUpdateDto dto);
+
+    Task<bool> DeleteAsync(int id);
+
 }

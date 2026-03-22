@@ -1,11 +1,11 @@
-﻿using WarehouseProject.Models;
-using WarehouseProject.DTOs;
-namespace WarehouseProject.Services
+﻿using WarehouseProject.DTOs.Outbound;
+
+public interface IPackingUnitService
 {
-    public interface IPackingUnitService
-    {
-        Task<PackingUnitModel> Create(PackingUnitDTO dto);
-        Task<List<PackingUnitModel>> GetAll();
-        Task<PackingUnitModel> CompletePacking(int packId);
-    }
+    Task<PackingResponseDto> CreateAsync(PackingCreateDto dto);
+    Task<List<PackingResponseDto>> GetAllAsync();
+    Task<PackingResponseDto?> UpdateAsync(int id, PackingStatusUpdateDto dto);
+
+
+
 }

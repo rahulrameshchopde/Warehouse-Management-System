@@ -4,8 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WarehouseProject.Data;
-using WarehouseProject.Services.Identity_Access_Management;
-using WarehouseProject.DTOs;
+using WarehouseProject.DTOs.Register;
 using WarehouseProject.Models;
 namespace WarehouseProject.Services;
 
@@ -18,6 +17,17 @@ public class AuthService : IAuthService
         _context = context;
         _config = config;
     }
+
+    public async Task<IEnumerable<UserModel>> GetAllUsers()
+    {
+        return await _context.Users.ToListAsync();
+    }
+
+    public async Task<UserModel> GetUserById(int id)
+    {
+        return await _context.Users.FindAsync(id);
+    }
+
     // REGISTER USER
     public async Task<bool> Register(RegisterUserDTO dto)
 
@@ -54,9 +64,37 @@ public class AuthService : IAuthService
             return "Invalid password";
         return JWTTokenGenerator(user);
     }
+
+    public async Task<bool> UpdateUser(int id, RegisterUserDTO dto)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user == null)
+            return false;
+        // ✅ Update only required fields
+        user.Name = dto.Name;
+        user.Role = dto.Role;
+        // ❌ DO NOT update password unless needed
+        // user.Password = dto.Password;  ← avoid this
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+
+    public async Task<bool> DeleteUser(int id)
+    {
+        var user = await _context.Users.FindAsync(id);
+        if (user == null)
+            return false;
+        _context.Users.Remove(user);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+
     // GENERATE JWT TOKEN
     public string JWTTokenGenerator(UserModel user)
     {
+       
 
         var key = new SymmetricSecurityKey(
           Encoding.UTF8.GetBytes(_config["Jwt:Key"])

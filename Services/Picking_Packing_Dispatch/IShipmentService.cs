@@ -1,10 +1,8 @@
-﻿using WarehouseProject.Models;
-using WarehouseProject.DTOs;
-namespace WarehouseProject.Services.Picking_Packing_Dispatch
+﻿using WarehouseProject.DTOs.Outbound;
+
+public interface IShipmentService
 {
-    public interface IShipmentService
-    {
-        Task<ShipmentModel> Create(ShipmentDTO dto);
-        Task<List<ShipmentModel>> GetAll();
-    }
+    Task<ShipmentResponseDto> CreateAsync(ShipmentCreateDto dto);
+    Task<List<ShipmentResponseDto>> GetAllAsync();
+    Task<ShipmentResponseDto?> UpdateAsync(int id, ShipmentUpdateDto dto);
 }

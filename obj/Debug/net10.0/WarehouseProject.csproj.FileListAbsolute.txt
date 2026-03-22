@@ -139,6 +139,7 @@ C:\Users\2475896\source\repos\WarehouseProject\WarehouseProject\obj\Debug\net10.
 C:\Users\2475896\source\repos\WarehouseProject\WarehouseProject\obj\Debug\net10.0\WarehouseProject.AssemblyInfo.cs
 C:\Users\2475896\source\repos\WarehouseProject\WarehouseProject\obj\Debug\net10.0\WarehouseProject.csproj.CoreCompileInputs.cache
 C:\Users\2475896\source\repos\WarehouseProject\WarehouseProject\obj\Debug\net10.0\WarehouseProject.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\2475896\source\repos\WarehouseProject\WarehouseProject\obj\Debug\net10.0\WarehouseProject.sourcelink.json
 C:\Users\2475896\source\repos\WarehouseProject\WarehouseProject\obj\Debug\net10.0\rjimswa.dswa.cache.json
 C:\Users\2475896\source\repos\WarehouseProject\WarehouseProject\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\2475896\source\repos\WarehouseProject\WarehouseProject\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json

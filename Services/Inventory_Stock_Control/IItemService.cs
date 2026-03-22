@@ -1,13 +1,10 @@
 ﻿using WarehouseProject.DTOs;
-using WarehouseProject.Models;
-namespace WarehouseProject.Services.Inventory_Stock_Control
+using WarehouseProject.DTOs.itemDtos;
+public interface IItemService
 {
-    public interface IItemService
-    {
-        Task<List<ItemModel>> GetAll();
-        Task<ItemModel> GetById(int id);
-        Task<ItemModel> Create(ItemDTO dto);
-        Task<ItemModel> Update(int id, ItemDTO dto);
-        Task<bool> Delete(int id);
-    }
+    Task<IEnumerable<ItemResponseDTO>> GetAll();
+    Task<ItemResponseDTO> GetById(int id);
+    Task<ItemResponseDTO> Create(CreateItemDTO dto);
+    Task<ItemResponseDTO> Update(int id, UpdateItemDTO dto);
+    Task<bool> Delete(int id);
 }

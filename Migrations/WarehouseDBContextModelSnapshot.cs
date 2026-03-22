@@ -22,7 +22,7 @@ namespace WarehouseProject.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("WarehouseProject.Models.AuditLogModel", b =>
+            modelBuilder.Entity("AuditLogModel", b =>
                 {
                     b.Property<int>("AuditID")
                         .ValueGeneratedOnAdd()
@@ -35,7 +35,6 @@ namespace WarehouseProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Metadata")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Resource")
@@ -55,6 +54,38 @@ namespace WarehouseProject.Migrations
                     b.ToTable("AuditLogs");
                 });
 
+            modelBuilder.Entity("ItemModel", b =>
+                {
+                    b.Property<int>("ItemID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemID"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SKU")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitOfMeasure")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ItemID");
+
+                    b.ToTable("Items");
+                });
+
             modelBuilder.Entity("WarehouseProject.Models.BinLocationModel", b =>
                 {
                     b.Property<int>("BinID")
@@ -70,9 +101,8 @@ namespace WarehouseProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("ZoneID")
                         .HasColumnType("int");
@@ -99,9 +129,8 @@ namespace WarehouseProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("Supplier")
                         .IsRequired()
@@ -141,39 +170,6 @@ namespace WarehouseProject.Migrations
                     b.ToTable("InventoryBalances");
                 });
 
-            modelBuilder.Entity("WarehouseProject.Models.ItemModel", b =>
-                {
-                    b.Property<int>("ItemID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItemID"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SKU")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UnitOfMeasure")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ItemID");
-
-                    b.ToTable("Items");
-                });
-
             modelBuilder.Entity("WarehouseProject.Models.NotificationModel", b =>
                 {
                     b.Property<int>("NotificationID")
@@ -182,9 +178,8 @@ namespace WarehouseProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotificationID"));
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -193,9 +188,8 @@ namespace WarehouseProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
@@ -205,6 +199,71 @@ namespace WarehouseProject.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("WarehouseProject.Models.OrderItemModel", b =>
+                {
+                    b.Property<int>("OrderItemID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderItemID"));
+
+                    b.Property<int>("ItemID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderItemID");
+
+                    b.HasIndex("ItemID");
+
+                    b.HasIndex("OrderID");
+
+                    b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("WarehouseProject.Models.OrderModel", b =>
+                {
+                    b.Property<int>("OrderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("DeliveryAddress")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("RequiredDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderID");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("WarehouseProject.Models.PackingUnitModel", b =>
@@ -222,14 +281,15 @@ namespace WarehouseProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<double>("Weight")
                         .HasColumnType("float");
 
                     b.HasKey("PackID");
+
+                    b.HasIndex("OrderID");
 
                     b.ToTable("PackingUnits");
                 });
@@ -254,15 +314,16 @@ namespace WarehouseProject.Migrations
                     b.Property<int>("PickQuantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("PickTaskID");
 
                     b.HasIndex("BinID");
 
                     b.HasIndex("ItemID");
+
+                    b.HasIndex("OrderID");
 
                     b.ToTable("PickTasks");
                 });
@@ -284,9 +345,8 @@ namespace WarehouseProject.Migrations
                     b.Property<int>("ReceiptID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("TargetBinID")
                         .HasColumnType("int");
@@ -319,9 +379,8 @@ namespace WarehouseProject.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("ToBinID")
                         .HasColumnType("int");
@@ -358,11 +417,12 @@ namespace WarehouseProject.Migrations
                     b.Property<int>("OrderID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("ShipmentID");
+
+                    b.HasIndex("OrderID");
 
                     b.ToTable("Shipments");
                 });
@@ -375,16 +435,14 @@ namespace WarehouseProject.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RuleID"));
 
-                    b.Property<string>("Criterion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Criterion")
+                        .HasColumnType("int");
 
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("RuleID");
 
@@ -468,9 +526,8 @@ namespace WarehouseProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("WarehouseID");
 
@@ -492,9 +549,8 @@ namespace WarehouseProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Scope")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Scope")
+                        .HasColumnType("int");
 
                     b.HasKey("ReportID");
 
@@ -516,9 +572,8 @@ namespace WarehouseProject.Migrations
                     b.Property<int>("WarehouseID")
                         .HasColumnType("int");
 
-                    b.Property<string>("ZoneType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ZoneType")
+                        .HasColumnType("int");
 
                     b.HasKey("ZoneID");
 
@@ -527,7 +582,7 @@ namespace WarehouseProject.Migrations
                     b.ToTable("Zones");
                 });
 
-            modelBuilder.Entity("WarehouseProject.Models.AuditLogModel", b =>
+            modelBuilder.Entity("AuditLogModel", b =>
                 {
                     b.HasOne("WarehouseProject.Models.UserModel", "User")
                         .WithMany("AuditLogs")
@@ -557,7 +612,7 @@ namespace WarehouseProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WarehouseProject.Models.ItemModel", "Item")
+                    b.HasOne("ItemModel", "Item")
                         .WithMany("InventoryBalances")
                         .HasForeignKey("ItemID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -579,6 +634,36 @@ namespace WarehouseProject.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("WarehouseProject.Models.OrderItemModel", b =>
+                {
+                    b.HasOne("ItemModel", "Item")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WarehouseProject.Models.OrderModel", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("WarehouseProject.Models.PackingUnitModel", b =>
+                {
+                    b.HasOne("WarehouseProject.Models.OrderModel", "Order")
+                        .WithMany("PackingUnits")
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("WarehouseProject.Models.PickTaskModel", b =>
                 {
                     b.HasOne("WarehouseProject.Models.BinLocationModel", "BinLocation")
@@ -587,20 +672,28 @@ namespace WarehouseProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WarehouseProject.Models.ItemModel", "Item")
+                    b.HasOne("ItemModel", "Item")
                         .WithMany("PickTasks")
                         .HasForeignKey("ItemID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WarehouseProject.Models.OrderModel", "Order")
+                        .WithMany("PickTasks")
+                        .HasForeignKey("OrderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("BinLocation");
 
                     b.Navigation("Item");
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("WarehouseProject.Models.PutAwayTaskModel", b =>
                 {
-                    b.HasOne("WarehouseProject.Models.ItemModel", "Item")
+                    b.HasOne("ItemModel", "Item")
                         .WithMany("PutAwayTasks")
                         .HasForeignKey("ItemID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -633,7 +726,7 @@ namespace WarehouseProject.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("WarehouseProject.Models.ItemModel", "Item")
+                    b.HasOne("ItemModel", "Item")
                         .WithMany("ReplenishmentTasks")
                         .HasForeignKey("ItemID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -652,9 +745,20 @@ namespace WarehouseProject.Migrations
                     b.Navigation("ToBin");
                 });
 
+            modelBuilder.Entity("WarehouseProject.Models.ShipmentModel", b =>
+                {
+                    b.HasOne("WarehouseProject.Models.OrderModel", "Order")
+                        .WithMany("Shipments")
+                        .HasForeignKey("OrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
             modelBuilder.Entity("WarehouseProject.Models.StockReservationModel", b =>
                 {
-                    b.HasOne("WarehouseProject.Models.ItemModel", "item")
+                    b.HasOne("ItemModel", "item")
                         .WithMany("StockReservations")
                         .HasForeignKey("ItemID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -674,6 +778,21 @@ namespace WarehouseProject.Migrations
                     b.Navigation("Warehouse");
                 });
 
+            modelBuilder.Entity("ItemModel", b =>
+                {
+                    b.Navigation("InventoryBalances");
+
+                    b.Navigation("OrderItems");
+
+                    b.Navigation("PickTasks");
+
+                    b.Navigation("PutAwayTasks");
+
+                    b.Navigation("ReplenishmentTasks");
+
+                    b.Navigation("StockReservations");
+                });
+
             modelBuilder.Entity("WarehouseProject.Models.BinLocationModel", b =>
                 {
                     b.Navigation("InventoryBalances");
@@ -688,17 +807,15 @@ namespace WarehouseProject.Migrations
                     b.Navigation("PutAwayTasks");
                 });
 
-            modelBuilder.Entity("WarehouseProject.Models.ItemModel", b =>
+            modelBuilder.Entity("WarehouseProject.Models.OrderModel", b =>
                 {
-                    b.Navigation("InventoryBalances");
+                    b.Navigation("OrderItems");
+
+                    b.Navigation("PackingUnits");
 
                     b.Navigation("PickTasks");
 
-                    b.Navigation("PutAwayTasks");
-
-                    b.Navigation("ReplenishmentTasks");
-
-                    b.Navigation("StockReservations");
+                    b.Navigation("Shipments");
                 });
 
             modelBuilder.Entity("WarehouseProject.Models.UserModel", b =>

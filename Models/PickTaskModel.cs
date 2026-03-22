@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WarehousePro.API.Models.Enums;
 
 namespace WarehouseProject.Models
 {
@@ -11,14 +12,19 @@ namespace WarehouseProject.Models
         public int ItemID { get; set; }
         public int BinID { get; set; }
         public int PickQuantity { get; set; }
-       
-        public string Status { get; set; }
+
+        
+        public PickTaskStatus Status { get; set; } = PickTaskStatus.Created;
+
+
+        [ForeignKey("OrderID")]
+        public OrderModel? Order { get; set;  }
 
         [ForeignKey("ItemID")]
-       public ItemModel Item { get; set; }
+       public ItemModel? Item { get; set; }
 
         [ForeignKey("BinID")]
-        public BinLocationModel BinLocation { get; set; }
+        public BinLocationModel? BinLocation { get; set; }
 
     }
 }

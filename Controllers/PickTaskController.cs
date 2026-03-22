@@ -1,21 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-
 using Microsoft.AspNetCore.Mvc;
-
-using WarehouseProject.DTOs;
-
+using WarehousePro.API.DTOs.Outbound;
+using WarehousePro.API.Services.Interfaces;
+using WarehouseProject.DTOs.Outbound;
 using WarehouseProject.Services;
-using WarehouseProject.Services.Picking_Packing_Dispatch;
+
 
 namespace WarehouseProject.Controllers
 
 {
+    [ApiController]
 
     [Route("api/[controller]")]
 
-    [ApiController]
-
-    [Authorize(Roles = "Operator")]
+    [Authorize]
 
     public class PickTaskController : ControllerBase
 
@@ -31,60 +29,74 @@ namespace WarehouseProject.Controllers
 
         }
 
+        // ✅ CREATE PICK TASK (Manual)
+
         [HttpPost]
 
-        public async Task<IActionResult> Create(PickTaskDTO dto)
+        [Authorize(Roles = "Admin,Operator")]
+
+        public async Task<IActionResult> Create(PickTaskCreateDto dto)
 
         {
 
-            var result = await _service.Create(dto);
+            var result = await _service.CreatePickAsync(dto);
 
             return Ok(result);
 
         }
 
+        // ✅ AUTO CREATE FROM ORDER
+
+        [HttpPost("auto/{orderId}")]
+
+        [Authorize(Roles = "Admin")]
+
+        public async Task<IActionResult> AutoCreate(int orderId)
+
+        {
+
+            await _service.AutoCreateFromOrder(orderId);
+
+            return Ok("PickTasks created automatically");
+
+        }
+
+        // ✅ GET ALL PICK TASKS
+
         [HttpGet]
+
+        [Authorize(Roles = "Admin,Supervisor,Operator")]
 
         public async Task<IActionResult> GetAll()
 
         {
 
-            return Ok(await _service.GetAll());
-
-        }
-
-        [HttpGet("{id}")]
-
-        public async Task<IActionResult> GetById(int id)
-
-        {
-
-            var result = await _service.GetById(id);
-
-            if (result == null)
-
-                return NotFound();
+            var result = await _service.GetAllAsync();
 
             return Ok(result);
 
         }
 
-        [HttpDelete("{id}")]
+        // ✅ UPDATE STATUS (AUTO INVENTORY REDUCE HERE 🔥)
 
-        public async Task<IActionResult> Delete(int id)
+        [HttpPut("status/{id}")]
+
+        [Authorize(Roles = "Admin,Operator")]
+
+        public async Task<IActionResult> UpdateStatus(int id, PickTaskUpdateDto dto)
 
         {
 
-            var result = await _service.Delete(id);
+            var result = await _service.UpdateStatusAsync(id, dto);
 
-            if (!result)
+            if (result == null)
 
-                return NotFound();
+                return NotFound("PickTask not found");
 
-            return Ok("Deleted");
+            return Ok(result);
 
         }
 
     }
-
 }
+ 

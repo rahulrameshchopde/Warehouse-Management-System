@@ -1,90 +1,115 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
 using Microsoft.AspNetCore.Mvc;
+using WarehouseProject.DTOs.InboundReceipt;
 
-using WarehouseProject.DTOs;
+[Route("api/[controller]")]
 
-using WarehouseProject.Services;
+[ApiController]
 
-namespace WarehouseProject.Controllers
+[Authorize]
+
+public class InboundReceiptController : ControllerBase
 
 {
 
-    [Route("api/[controller]")]
+    private readonly IInboundReceiptService _service;
 
-    [ApiController]
-
-    [Authorize(Roles = "Operator,Supervisor")]
-
-    public class InboundReceiptController : ControllerBase
+    public InboundReceiptController(IInboundReceiptService service)
 
     {
 
-        private readonly IInboundReceiptService _service;
+        _service = service;
 
-        public InboundReceiptController(IInboundReceiptService service)
+    }
 
-        {
+    // GET ALL
 
-            _service = service;
+    [HttpGet]
+    [Authorize(Roles = "Admin, Supervisor")]
 
-        }
+    public async Task<IActionResult> GetAll()
 
-        [HttpPost]
+    {
 
-        public async Task<IActionResult> Create(InboundReceiptDTO dto)
+        return Ok(await _service.GetAll());
 
-        {
+    }
 
-            var result = await _service.Create(dto);
+    // GET BY ID
 
-            return Ok(result);
+    [HttpGet("{id}")]
+    [Authorize(Roles = "Admin, Supervisor , InventoryPlanner")]
 
-        }
+    public async Task<IActionResult> GetById(int id)
 
-        [HttpGet]
+    {
 
-        public async Task<IActionResult> GetAll()
+        var result = await _service.GetById(id);
 
-        {
+        if (result == null) return NotFound();
 
-            var result = await _service.GetAll();
+        return Ok(result);
 
-            return Ok(result);
+    }
 
-        }
+    // CREATE (Admin)
 
-        [HttpGet("{id}")]
+    [HttpPost]
 
-        public async Task<IActionResult> GetById(int id)
+    [Authorize(Roles = "Admin")]
 
-        {
+    public async Task<IActionResult> Create(CreateInboundReceiptDTO dto)
 
-            var result = await _service.GetById(id);
+    {
 
-            if (result == null)
+        var result = await _service.Create(dto);
 
-                return NotFound();
+        if (result == null)
 
-            return Ok(result);
+            return BadRequest("ReferenceNo already exists");
 
-        }
+        return Ok(result);
 
-        [HttpDelete("{id}")]
+    }
 
-        public async Task<IActionResult> Delete(int id)
+    // UPDATE (Admin)
 
-        {
+    [HttpPut("{id}")]
 
-            var result = await _service.Delete(id);
+    [Authorize(Roles = "Admin")]
 
-            if (!result)
+    public async Task<IActionResult> Update(int id, UpdateInboundReceiptDTO dto)
 
-                return NotFound();
+    {
 
-            return Ok("Deleted");
+        var result = await _service.Update(id, dto);
 
-        }
+        if (result == null)
+
+            return NotFound();
+
+        return Ok(result);
+
+    }
+
+    // DELETE (Admin)
+
+    [HttpDelete("{id}")]
+
+    [Authorize(Roles = "Admin")]
+
+    public async Task<IActionResult> Delete(int id)
+
+    {
+
+        var result = await _service.Delete(id);
+
+        if (!result)
+
+            return NotFound();
+
+        return Ok("Deleted successfully");
 
     }
 

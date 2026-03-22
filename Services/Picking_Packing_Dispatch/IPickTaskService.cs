@@ -1,12 +1,24 @@
-﻿using WarehouseProject.DTOs;
-using WarehouseProject.Models;
-namespace WarehouseProject.Services.Picking_Packing_Dispatch
+﻿using WarehousePro.API.DTOs.Outbound;
+
+namespace WarehousePro.API.Services.Interfaces
+
 {
+
     public interface IPickTaskService
+
     {
-        Task<PickTaskModel> Create(PickTaskDTO dto);
-        Task<List<PickTaskModel>> GetAll();
-        Task<PickTaskModel> GetById(int id);
-        Task<bool> Delete(int id);
+
+        Task<PickTaskResponseDto> CreatePickAsync(PickTaskCreateDto dto);
+
+
+
+        Task<List<PickTaskResponseDto>> GetAllAsync();
+
+        Task<PickTaskResponseDto?> UpdateStatusAsync(int id, PickTaskUpdateDto dto);
+
+        Task AutoCreateFromOrder(int orderId);
+
     }
+
+
 }

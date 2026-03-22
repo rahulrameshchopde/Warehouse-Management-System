@@ -19,7 +19,7 @@ namespace WarehouseProject.Services.Replenishment_Slotting
                 FromBinID = dto.FromBinID,
                 ToBinID = dto.ToBinID,
                 Quantity = dto.Quantity,
-                Status = "Pending"
+                
             };
             _context.ReplenishmentTasks.Add(task);
             await _context.SaveChangesAsync();
@@ -43,7 +43,7 @@ namespace WarehouseProject.Services.Replenishment_Slotting
                 .FirstOrDefaultAsync(x => x.ReplenishID == id);
             if (task == null)
                 return null;
-            task.Status = "Completed";
+            
             await _context.SaveChangesAsync();
             return task;
         }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using WarehouseProject.Services;
 namespace WarehouseProject.Controllers
 {
@@ -17,6 +18,7 @@ namespace WarehouseProject.Controllers
         public async Task<IActionResult> GetDashboard()
         {
             var result = await _service.GetDashboardData();
+           
             return Ok(result);
         }
     }

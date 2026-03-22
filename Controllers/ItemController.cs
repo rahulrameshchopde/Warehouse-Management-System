@@ -1,112 +1,115 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using WarehouseProject.DTOs;
+using WarehouseProject.DTOs.itemDtos;
 
-using WarehouseProject.Services.Inventory_Stock_Control;
+[Route("api/[controller]")]
 
-namespace WarehouseProject.Controllers
+[ApiController]
+
+[Authorize]
+
+public class ItemController : ControllerBase
 
 {
 
-    [Route("api/[controller]")]
+    private readonly IItemService _service;
 
-    [ApiController]
-
-    [Authorize]
-
-    public class ItemController : ControllerBase
+    public ItemController(IItemService service)
 
     {
 
-        private readonly IItemService _service;
+        _service = service;
 
-        public ItemController(IItemService service)
+    }
 
-        {
+    // ✅ GET ALL
 
-            _service = service;
+    [HttpGet]
 
-        }
+    public async Task<IActionResult> GetAll()
 
-        [HttpGet]
+    {
 
-        public async Task<IActionResult> GetAll()
+        return Ok(await _service.GetAll());
 
-        {
+    }
 
-            var items = await _service.GetAll();
+    // ✅ GET BY ID
 
-            return Ok(items);
+    [HttpGet("{id}")]
 
-        }
+    public async Task<IActionResult> GetById(int id)
 
-        [HttpGet("{id}")]
+    {
 
-        public async Task<IActionResult> Get(int id)
+        var result = await _service.GetById(id);
 
-        {
+        if (result == null) return NotFound();
 
-            var item = await _service.GetById(id);
+        return Ok(result);
 
-            if (item == null)
+    }
 
-                return NotFound();
+    // ✅ CREATE (Admin)
 
-            return Ok(item);
+    [HttpPost]
 
-        }
+    [Authorize(Roles = "Admin")]
 
-        [HttpPost]
+    public async Task<IActionResult> Create(CreateItemDTO dto)
 
-        [Authorize(Roles = "Admin,InventoryPlanner")]
+    {
 
-        public async Task<IActionResult> Create(ItemDTO dto)
+        var result = await _service.Create(dto);
 
-        {
+        if (result == null)
 
-            var item = await _service.Create(dto);
+            return BadRequest("Item with same SKU already exists");
 
-            return Ok(item);
+        return Ok(result);
 
-        }
+    }
 
-        [HttpPut("{id}")]
+    // ✅ UPDATE (Admin)
 
-        [Authorize(Roles = "Admin, InventoryPlanner")]
+    [HttpPut("{id}")]
 
-        public async Task<IActionResult> Update(int id, ItemDTO dto)
+    [Authorize(Roles = "Admin")]
 
-        {
+    public async Task<IActionResult> Update(int id, UpdateItemDTO dto)
 
-            var item = await _service.Update(id, dto);
+    {
 
-            if (item == null)
+        var result = await _service.Update(id, dto);
 
-                return NotFound();
+        if (result == null)
 
-            return Ok(item);
+            return BadRequest("Duplicate SKU or Item not found");
 
-        }
+        return Ok(result);
 
-        [HttpDelete("{id}")]
+    }
 
-        [Authorize(Roles = "Admin")]
+    // ✅ DELETE (Admin)
 
-        public async Task<IActionResult> Delete(int id)
+    [HttpDelete("{id}")]
 
-        {
+    [Authorize(Roles = "Admin")]
 
-            var result = await _service.Delete(id);
+    public async Task<IActionResult> Delete(int id)
 
-            if (!result)
+    {
 
-                return NotFound();
+        var result = await _service.Delete(id);
 
-            return Ok("Item deleted");
+        if (!result)
 
-        }
+            return NotFound();
+
+        return Ok("Deleted successfully");
 
     }
 

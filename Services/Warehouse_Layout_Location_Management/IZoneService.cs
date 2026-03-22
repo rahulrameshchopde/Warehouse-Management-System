@@ -1,11 +1,10 @@
-﻿using WarehouseProject.DTOs;
-using WarehouseProject.Models;
-namespace WarehouseProject.Services
+﻿using WarehousePro.API.DTOs.Zone;
+
+public interface IZoneService
 {
-    public interface IZoneService
-    {
-        Task<IEnumerable<ZoneModel>> GetAll();
-        Task<ZoneModel> Create(ZoneDTO dto);
-        Task<bool> Delete(int id);
-    }
+    Task<List<ZoneResponseDto>> GetAllAsync();
+    Task<ZoneResponseDto?> GetByIdAsync(int id);
+    Task<ZoneResponseDto> CreateAsync(ZoneCreateDto dto);
+    Task<bool> UpdateAsync(int id, ZoneUpdateDto dto);
+    Task<bool> DeleteAsync(int id);
 }

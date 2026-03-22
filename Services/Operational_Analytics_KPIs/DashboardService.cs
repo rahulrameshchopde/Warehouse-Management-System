@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WarehouseProject.Data;
-using WarehouseProject.DTOs;
+using WarehouseProject.DTOs.Notification;
 namespace WarehouseProject.Services
 {
     public class DashboardService : IDashboardService

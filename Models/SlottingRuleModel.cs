@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WarehousePro.API.Models.Enums;
 
 namespace WarehouseProject.Models
 {
@@ -6,8 +7,8 @@ namespace WarehouseProject.Models
     {
         [Key]
         public int RuleID { get; set; }
-        public string Criterion { get; set; }
+        public SlottingCriterion Criterion { get; set; }
         public int Priority { get; set; }
-        public string Status { get; set; }
+        public SlottingRuleStatus Status { get; set; } = SlottingRuleStatus.Active;
     }
 }

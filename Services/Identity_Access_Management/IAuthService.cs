@@ -1,14 +1,15 @@
-﻿using WarehouseProject.DTOs;
+﻿using WarehouseProject.DTOs.Register;
 using WarehouseProject.Models;
 
-namespace WarehouseProject.Services.Identity_Access_Management
+public interface IAuthService
 {
-    public interface IAuthService
-    {
-        Task<bool> Register (RegisterUserDTO dto);
-        Task<string> Login (LoginDTO dto);
-
-        string JWTTokenGenerator(UserModel user);
-    }
+    
+    Task<bool> Register(RegisterUserDTO dto);
+    Task<string> Login(LoginDTO dto);
+    string JWTTokenGenerator(UserModel user);
+    
+    Task<IEnumerable<UserModel>> GetAllUsers();
+    Task<UserModel> GetUserById(int id);
+    Task<bool> UpdateUser(int id, RegisterUserDTO dto); // using same DTO
+    Task<bool> DeleteUser(int id);
 }
- 

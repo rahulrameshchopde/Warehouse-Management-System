@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WarehousePro.API.Models.Enums;
 
 namespace WarehouseProject.Models
 {
@@ -6,9 +7,11 @@ namespace WarehouseProject.Models
     {
         [Key]
         public int WarehouseID { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Location { get; set; }
-        public string Status { get; set; }
+        public WarehouseStatus Status { get; set; }
         public ICollection<ZoneModel> Zones { get; set; }
     }
 }

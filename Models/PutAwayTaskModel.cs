@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WarehousePro.API.Models.Enums;
 
 namespace WarehouseProject.Models
 {
@@ -21,7 +22,7 @@ public class PutAwayTaskModel
 
         public int Quantity { get; set; }
 
-        public string Status { get; set; }
+        public PutAwayStatus Status { get; set; } = PutAwayStatus.Pending;
 
         [ForeignKey("ReceiptID")]
 

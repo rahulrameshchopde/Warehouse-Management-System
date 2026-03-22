@@ -1,28 +1,60 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WarehouseProject.Models;
 using WarehouseProject.Services;
 namespace WarehouseProject.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+
+    [Route("api/[controller]")]
+
+    [Authorize]
+
     public class NotificationController : ControllerBase
+
     {
+
         private readonly INotificationService _service;
+
         public NotificationController(INotificationService service)
+
         {
+
             _service = service;
+
         }
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+
+        // ✅ GET USER NOTIFICATIONS
+
+        [HttpGet("{userId}")]
+
+        public async Task<IActionResult> Get(int userId)
+
         {
-            var notifications = await _service.GetAllAsync();
-            return Ok(notifications);
+
+            var data = await _service.GetByUserAsync(userId);
+
+            return Ok(data);
+
         }
-        [HttpPost]
-        public async Task<IActionResult> Create(NotificationModel notification)
+
+        // ✅ MARK AS READ
+
+        [HttpPut("{id}")]
+
+        public async Task<IActionResult> MarkRead(int id)
+
         {
-            var result = await _service.CreateAsync(notification);
-            return Ok(result);
+
+            var result = await _service.MarkAsReadAsync(id);
+
+            if (!result)
+
+                return NotFound("Notification not found");
+
+            return Ok("Marked as read");
+
         }
+
     }
 }

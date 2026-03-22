@@ -1,25 +1,23 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-
 using Microsoft.EntityFrameworkCore;
-
 using Microsoft.IdentityModel.Tokens;
-
 using System.Text;
-
+using System.Text.Json.Serialization;
+using WarehousePro.API.Services;
+using WarehousePro.API.Services.Interfaces;
 using WarehouseProject.Data;
 using WarehouseProject.Helpers;
 using WarehouseProject.Services;
 using WarehouseProject.Services.AuditLogs;
-using WarehouseProject.Services.Identity_Access_Management;
-using WarehouseProject.Services.Inventory_Stock_Control;
-using WarehouseProject.Services.Picking_Packing_Dispatch;
+using WarehouseProject.Services.Order;
+
 using WarehouseProject.Services.Replenishment_Slotting;
-using WarehouseProject.Services.Warehouse_Layout_Location_Management;
+
+
 
 
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 // DATABASE CONNECTION
 
@@ -27,6 +25,14 @@ builder.Services.AddDbContext<WarehouseDBContext>(options =>
 
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+//for Session----Remembering the loggedin username
+
+//builder.Services.AddDistributedMemoryCache();
+//builder.Services.AddSession(options => {
+//    options.IdleTimeout = TimeSpan.FromSeconds(20);
+//    options.Cookie.HttpOnly = true;
+//    options.Cookie.IsEssential = true;
+//});
 
 // DEPENDENCY INJECTION
 
@@ -34,13 +40,15 @@ builder.Services.AddDbContext<WarehouseDBContext>(options =>
         builder.Services.AddScoped<IWarehouseService, WarehouseService>();
         builder.Services.AddScoped<IZoneService, ZoneService>();
         builder.Services.AddScoped<IBinLocationService, BinLocationService>();
-        builder.Services.AddScoped<IPutAwayService, PutAwayService>();
+        builder.Services.AddScoped<IPutAwayTaskService, PutAwayTaskService>();
         builder.Services.AddScoped<IInventoryBalanceService, InventoryBalanceService>();
         builder.Services.AddScoped<IPickTaskService, PickTaskService>();
         builder.Services.AddScoped<IItemService, ItemService>();
+        builder.Services.AddScoped<IOrderService, OrderService>();
+
         builder.Services.AddScoped<IInboundReceiptService, InboundReceiptService>();
         builder.Services.AddScoped<IStockReservationService, StockReservationService>();
-        builder.Services.AddScoped<IPackingUnitService, PackingUnitService>();
+        builder.Services.AddScoped<IPackingUnitService, PackingService>();
         builder.Services.AddScoped<IShipmentService, ShipmentService>();
         builder.Services.AddScoped<IReplenishmentService, ReplenishmentService>();
         builder.Services.AddScoped<ISlottingRuleService, SlottingRuleService>();
@@ -49,6 +57,17 @@ builder.Services.AddDbContext<WarehouseDBContext>(options =>
         builder.Services.AddScoped<INotificationService, NotificationService>();
         builder.Services.AddScoped<IAuditLogService, AuditLogService>();
         builder.Services.AddScoped<AuditHelper>();
+builder.Services.AddControllers()
+
+.AddJsonOptions(opt =>
+
+{
+
+opt.JsonSerializerOptions.Converters
+
+    .Add(new JsonStringEnumConverter());
+
+});
 
 
 
@@ -56,6 +75,7 @@ builder.Services.AddDbContext<WarehouseDBContext>(options =>
 // JWT AUTHENTICATION
 
 //var jwt = builder.Configuration.GetSection("Jwt");
+
 
 builder.Services.AddAuthentication(options =>
 
@@ -127,7 +147,7 @@ builder.Services.AddControllers()
 
 
 var app = builder.Build();
-
+//app.UseSession();
 
 // MIDDLEWARE PIPELINE
 

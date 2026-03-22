@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WarehousePro.API.Models.Enums;
 
 namespace WarehouseProject.Models
 {
@@ -15,7 +16,7 @@ namespace WarehouseProject.Models
         public int ToBinID { get; set; }
         [Required]
         public int Quantity { get; set; }
-        public string Status { get; set; }
+        public ReplenishmentStatus Status { get; set; } = ReplenishmentStatus.Planned;
 
         [ForeignKey("ItemID")]
         public ItemModel Item { get; set; }

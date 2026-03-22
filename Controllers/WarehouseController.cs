@@ -1,99 +1,110 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Microsoft.AspNetCore.Mvc;
+using WarehousePro.API.DTOs.Warehouse;
+using WarehouseProject.Models;
+using WarehouseProject.Services;
+
 
 namespace WarehouseProject.Controllers
+
 {
-    using global::WarehouseProject.DTOs;
-    using global::WarehouseProject.Services.Warehouse_Layout_Location_Management;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
 
+    [Route("api/[controller]")]
 
-    namespace WarehouseProject.Controllers
+    [ApiController]
+
+    public class WarehouseController : ControllerBase
 
     {
 
-        [ApiController]
+        private readonly IWarehouseService _service;
 
-        [Route("api/[controller]")]
-
-        public class WarehouseController : ControllerBase
+        public WarehouseController(IWarehouseService service)
 
         {
 
-            private readonly IWarehouseService _service;
+            _service = service;
 
-            public WarehouseController(IWarehouseService service)
+        }
 
-            {
+        [HttpGet]
 
-                _service = service;
+        [Authorize(Roles = "Admin,Operator")]
 
-            }
+        public async Task<IActionResult> GetAll()
 
-            [HttpGet]
+        {
 
-            public async Task<IActionResult> GetAll()
+            return Ok(await _service.GetAllAsync());
 
-            {
+        }
 
-                var warehouses = await _service.GetAll();
+        [HttpGet("{id}")]
 
-                return Ok(warehouses);
+        [Authorize(Roles = "Admin,Operator")]
 
-            }
+        public async Task<IActionResult> GetById(int id)
 
-            [HttpGet("{id}")]
+        {
 
-            public async Task<IActionResult> Get(int id)
+            var result = await _service.GetByIdAsync(id);
 
-            {
+            if (result == null)
 
-                var warehouse = await _service.GetById(id);
+                return NotFound();
 
-                if (warehouse == null)
+            return Ok(result);
 
-                    return NotFound();
+        }
 
-                return Ok(warehouse);
+        [HttpPost]
 
-            }
+        [Authorize(Roles = "Admin")]
 
-            [Authorize(Roles = "Admin")]
-            [HttpPost("Create")]
+        public async Task<IActionResult> Create(WarehouseCreateDto dto)
 
-            public async Task<IActionResult> Create(WarehouseDTO dto)
+        {
 
-            {
+            var result = await _service.CreateAsync(dto);
 
-                var warehouse = await _service.Create(dto);
+            return Ok(result);
 
-                return Ok(warehouse);
+        }
 
-            }
+        [HttpPut("{id}")]
 
-           [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
 
-            [HttpDelete("{id}")]
+        public async Task<IActionResult> Update(int id, WarehouseUpdateDto dto)
 
-            public async Task<IActionResult> Delete(int id)
+        {
 
-            {
+            var result = await _service.UpdateAsync(id, dto);
 
-                var result = await _service.Delete(id);
+            return Ok(result);
 
-                if (!result)
+        }
 
-                    return NotFound();
+        [HttpDelete("{id}")]
 
-                return Ok("Warehouse deleted");
+        [Authorize(Roles = "Admin")]
 
-            }
+        public async Task<IActionResult> Delete(int id)
+
+        {
+
+            var result = await _service.DeleteAsync(id);
+
+            if (!result)
+
+                return NotFound();
+
+            return Ok("Deleted Successfully");
 
         }
 
     }
-};
- 
+
+
+}

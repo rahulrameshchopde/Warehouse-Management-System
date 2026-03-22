@@ -1,38 +1,67 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WarehouseProject.Services;
-using WarehouseProject.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using WarehouseProject.DTOs.Outbound;
 namespace WarehouseProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Operator")]
-    public class PackingUnitController : ControllerBase
+    [Authorize(Roles = "Admin,Logistic")]
+
+   
+
+    public class PackingController : ControllerBase
+
     {
+
         private readonly IPackingUnitService _service;
-        public PackingUnitController(IPackingUnitService service)
+
+        public PackingController(IPackingUnitService service)
+
         {
+
             _service = service;
+
         }
+
         [HttpPost]
-        public async Task<IActionResult> Create(PackingUnitDTO dto)
+        
+        public async Task<IActionResult> Create(PackingCreateDto dto)
+
         {
-            var result = await _service.Create(dto);
+
+            var result = await _service.CreateAsync(dto);
+
             return Ok(result);
+
         }
+
         [HttpGet]
+
         public async Task<IActionResult> GetAll()
+
         {
-            var result = await _service.GetAll();
-            return Ok(result);
+
+            return Ok(await _service.GetAllAsync());
+
         }
-        [HttpPut("complete/{packId}")]
-        public async Task<IActionResult> CompletePacking(int packId)
+        [HttpPut("status/{id}")]
+
+        public async Task<IActionResult> UpdateStatus(int id, PackingStatusUpdateDto dto)
+
         {
-            var result = await _service.CompletePacking(packId);
+
+            var result = await _service.UpdateAsync(id, dto);
+
             if (result == null)
+
                 return NotFound();
+
             return Ok(result);
+
         }
+
+
     }
 }
+ 

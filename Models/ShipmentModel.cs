@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using WarehousePro.API.Models.Enums;
 
 namespace WarehouseProject.Models
 {
@@ -12,6 +14,9 @@ namespace WarehouseProject.Models
         public string Carrier { get; set; }
         public DateTime DispatchDate { get; set; }
         public DateTime DeliveryDate { get; set; }
-        public string Status { get; set; }
+        public ShipmentStatus Status { get; set; } = ShipmentStatus.Dispatched;
+        
+        [ForeignKey("OrderID")]
+        public OrderModel? Order { get; set; }
     }
 }

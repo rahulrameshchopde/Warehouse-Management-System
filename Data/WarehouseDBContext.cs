@@ -42,8 +42,15 @@ namespace WarehouseProject.Data
         public DbSet<InboundReceiptModel> InboundReceipts { get; set; }
 
         public DbSet<PutAwayTaskModel> PutAwayTasks { get; set; }
+        //Order
+
+
+        public DbSet<OrderModel> Orders { get; set; }
+        public DbSet<OrderItemModel> OrderItems { get; set; }
 
         // Picking / Packing
+
+
 
         public DbSet<PickTaskModel> PickTasks { get; set; }
 
@@ -77,6 +84,7 @@ namespace WarehouseProject.Data
                 .HasForeignKey(r => r.ToBinID)
                 .OnDelete(DeleteBehavior.Restrict);
         }
+        
 
 
     }

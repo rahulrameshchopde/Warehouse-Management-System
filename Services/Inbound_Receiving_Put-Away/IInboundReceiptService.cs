@@ -1,12 +1,10 @@
-﻿using WarehouseProject.DTOs;
-using WarehouseProject.Models;
-namespace WarehouseProject.Services
+﻿using WarehouseProject.DTOs.InboundReceipt;
+
+public interface IInboundReceiptService
 {
-    public interface IInboundReceiptService
-    {
-        Task<InboundReceiptModel> Create(InboundReceiptDTO dto);
-        Task<List<InboundReceiptModel>> GetAll();
-        Task<InboundReceiptModel> GetById(int id);
-        Task<bool> Delete(int id);
-    }
+    Task<IEnumerable<InboundReceiptResponseDTO>> GetAll();
+    Task<InboundReceiptResponseDTO> GetById(int id);
+    Task<InboundReceiptResponseDTO> Create(CreateInboundReceiptDTO dto);
+    Task<InboundReceiptResponseDTO> Update(int id, UpdateInboundReceiptDTO dto);
+    Task<bool> Delete(int id);
 }
