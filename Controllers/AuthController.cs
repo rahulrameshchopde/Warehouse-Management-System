@@ -13,14 +13,23 @@ namespace WarehouseProject.Controllers
 
     public class AuthController : ControllerBase
 
+       
+
     {
         private readonly IAuthService _authService;
 
-        public AuthController(IAuthService authService)
+        private readonly IAuditLogService _auditLogService;
+
+        public AuthController(IAuthService authService, IAuditLogService auditLogService)
 
         {
+
             _authService = authService;
+
+            _auditLogService = auditLogService;
+
         }
+
 
         // ✅ REGISTER (Public)
 
@@ -34,9 +43,22 @@ namespace WarehouseProject.Controllers
 
                 return BadRequest("User already exists");
 
+            // ✅ ADD AUDIT HERE
+
+            await _auditLogService.AddLog(
+
+                "Register",
+
+                "Auth",
+
+                $"User {dto.Email} registered"
+
+            );
+
             return Ok("User registered successfully");
 
         }
+
 
 
         // ✅ LOGIN (Public)
@@ -46,17 +68,18 @@ namespace WarehouseProject.Controllers
 
         {
             var token = await _authService.Login(dto);
+            await _auditLogService.AddLog(
+               "Login",
+               "Auth",
+               $"User {dto.Email} logged in"
+            );
+            return Ok(token);
 
-            if (token == null)
-
-                return Unauthorized("Invalid credentials");
-
-            return Ok(new { token });
         }
 
-        // ✅ GET ALL USERS (Admin only)
+            // ✅ GET ALL USERS (Admin only)
 
-        [HttpGet]
+            [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllUsers()
         {

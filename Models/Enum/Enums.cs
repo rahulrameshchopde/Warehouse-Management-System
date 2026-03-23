@@ -20,7 +20,7 @@
 
 	//}
 
-	
+
 
 
 	public enum WarehouseStatus
@@ -127,13 +127,14 @@
         Shipped,
         Delivered,
 		Completed,
-        Cancelled
+        
     }
 
     public enum PickTaskStatus
     {
-        Picked,
+        
         Created,
+        Picked,
         Completed
     }
 

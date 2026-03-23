@@ -1,48 +1,104 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-using WarehouseProject.Services.AuditLogs;
+using Microsoft.EntityFrameworkCore;
+
+using WarehouseProject.Data;
 
 namespace WarehouseProject.Controllers
 
 {
 
-    [Route("api/[controller]")]
-
     [ApiController]
+
+    [Route("api/[controller]")]
 
     public class AuditLogController : ControllerBase
 
     {
 
-        private readonly IAuditLogService _service;
+        private readonly WarehouseDBContext _context;
 
-        public AuditLogController(IAuditLogService service)
+        public AuditLogController(WarehouseDBContext context)
 
         {
 
-            _service = service;
+            _context = context;
 
         }
 
+        // ✅ GET ALL AUDIT LOGS
+
         [HttpGet]
 
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAllLogs()
 
         {
 
-            var logs = await _service.GetAll();
+            var logs = await _context.AuditLogs
+
+                .Include(x => x.User) // get user info
+
+                .Select(x => new
+
+                {
+
+                    x.AuditID,
+
+                    x.UserID,
+
+                    UserName = x.User.Name,
+
+                    x.Action,
+
+                    x.Resource,
+
+                    x.Metadata,
+
+                    x.Timestamp
+
+                })
+
+                .ToListAsync();
 
             return Ok(logs);
 
         }
 
+        // ✅ GET LOG BY ID
+
         [HttpGet("{id}")]
 
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetLogById(int id)
 
         {
 
-            var log = await _service.GetById(id);
+            var log = await _context.AuditLogs
+
+                .Include(x => x.User)
+
+                .Where(x => x.AuditID == id)
+
+                .Select(x => new
+
+                {
+
+                    x.AuditID,
+
+                    x.UserID,
+
+                    UserName = x.User.Name,
+
+                    x.Action,
+
+                    x.Resource,
+
+                    x.Metadata,
+
+                    x.Timestamp
+
+                })
+
+                .FirstOrDefaultAsync();
 
             if (log == null)
 

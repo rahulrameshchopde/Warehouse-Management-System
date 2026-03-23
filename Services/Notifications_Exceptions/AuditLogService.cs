@@ -1,43 +1,84 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Security.Claims;
 using WarehouseProject.Data;
-using WarehouseProject.DTOs.Notification;
-namespace WarehouseProject.Services.AuditLogs
+
+public class AuditLogService : IAuditLogService
+
 {
-    public class AuditLogService : IAuditLogService
+
+    private readonly WarehouseDBContext _context;
+
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public AuditLogService(
+
+        WarehouseDBContext context,
+
+        IHttpContextAccessor httpContextAccessor)
+
     {
-        private readonly WarehouseDBContext _context;
-        public AuditLogService(WarehouseDBContext context)
-        {
-            _context = context;
-        }
-        public async Task<List<AuditLogResponseDTO>> GetAll()
-        {
-            return await _context.AuditLogs
-                .Select(x => new AuditLogResponseDTO
-                {
-                    AuditID = x.AuditID,
-                    UserID = x.UserID,
-                    Action = x.Action,
-                    Resource = x.Resource,
-                    Metadata = x.Metadata,
-                    Timestamp = x.Timestamp
-                })
-                .ToListAsync();
-        }
-        public async Task<AuditLogResponseDTO> GetById(int id)
-        {
-            var log = await _context.AuditLogs.FindAsync(id);
-            if (log == null)
-                return null;
-            return new AuditLogResponseDTO
-            {
-                AuditID = log.AuditID,
-                UserID = log.UserID,
-                Action = log.Action,
-                Resource = log.Resource,
-                Metadata = log.Metadata,
-                Timestamp = log.Timestamp
-            };
-        }
+
+        _context = context;
+
+        _httpContextAccessor = httpContextAccessor;
+
     }
+
+    public async Task AddLog(string action, string resource, string? metadata)
+
+    {
+
+        int userId = 0;
+
+        // 🔥 Get UserID from JWT
+
+        var user = _httpContextAccessor.HttpContext?.User;
+
+        if (user != null && user.Identity.IsAuthenticated)
+
+        {
+
+            var userIdClaim = user.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim != null)
+
+            {
+
+                userId = int.Parse(userIdClaim.Value);
+
+            }
+
+        }
+
+        // ⚠️ fallback (for testing only)
+
+        if (userId == 0)
+
+        {
+
+            userId = 1; // default user
+
+        }
+
+        var log = new AuditLogModel
+
+        {
+
+            UserID = userId,
+
+            Action = action,
+
+            Resource = resource,
+
+            Metadata = metadata,
+
+            Timestamp = DateTime.UtcNow
+
+        };
+
+        _context.AuditLogs.Add(log);
+
+        await _context.SaveChangesAsync();
+
+    }
+
 }

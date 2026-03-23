@@ -94,12 +94,12 @@ public class AuthService : IAuthService
     // GENERATE JWT TOKEN
     public string JWTTokenGenerator(UserModel user)
     {
-       
+
 
         var key = new SymmetricSecurityKey(
           Encoding.UTF8.GetBytes(_config["Jwt:Key"])
       );
-       
+
         var claims = new[]
         {
            new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),

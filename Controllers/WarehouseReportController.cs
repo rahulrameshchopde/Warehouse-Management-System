@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
 using Microsoft.AspNetCore.Mvc;
-
-using WarehouseProject.DTOs;
-
+using WarehouseProject.DTOs.Notification;
 using WarehouseProject.Models;
 
 using WarehouseProject.Services;

@@ -6,9 +6,10 @@ using System.Text.Json.Serialization;
 using WarehousePro.API.Services;
 using WarehousePro.API.Services.Interfaces;
 using WarehouseProject.Data;
-using WarehouseProject.Helpers;
+
 using WarehouseProject.Services;
-using WarehouseProject.Services.AuditLogs;
+
+
 using WarehouseProject.Services.Order;
 
 using WarehouseProject.Services.Replenishment_Slotting;
@@ -56,7 +57,7 @@ builder.Services.AddDbContext<WarehouseDBContext>(options =>
         builder.Services.AddScoped<IDashboardService, DashboardService>();
         builder.Services.AddScoped<INotificationService, NotificationService>();
         builder.Services.AddScoped<IAuditLogService, AuditLogService>();
-        builder.Services.AddScoped<AuditHelper>();
+       
 builder.Services.AddControllers()
 
 .AddJsonOptions(opt =>
@@ -146,10 +147,17 @@ builder.Services.AddControllers()
         System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
 
+
+
+builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor(); 
+
 var app = builder.Build();
 //app.UseSession();
 
 // MIDDLEWARE PIPELINE
+ 
+ 
 
 app.UseHttpsRedirection();
 

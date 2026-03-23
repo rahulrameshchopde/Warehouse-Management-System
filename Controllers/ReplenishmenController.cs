@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WarehouseProject.DTOs;
+using WarehouseProject.DTOs.ReplenishmentDtos;
 using WarehouseProject.Services.Replenishment_Slotting;
 namespace WarehouseProject.Controllers
 {

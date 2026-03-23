@@ -1,4 +1,4 @@
-﻿namespace WarehouseProject.DTOs
+﻿namespace WarehouseProject.DTOs.Notification
 {
     public class SlottingRuleDTO
     {

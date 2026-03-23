@@ -6,7 +6,7 @@ using WarehousePro.API.Services.Interfaces;
 using WarehouseProject.Data;
 using WarehouseProject.Models;
 using WarehouseProject.Services;
-using WarehouseProject.Services.AuditLogs;
+
 
 namespace WarehousePro.API.Services
 {

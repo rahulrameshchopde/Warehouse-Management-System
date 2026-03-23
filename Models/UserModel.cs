@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WarehousePro.API.Models.Enums;
 
 namespace WarehouseProject.Models
 {

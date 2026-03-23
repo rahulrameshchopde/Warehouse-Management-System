@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WarehouseProject.Data;
-using WarehouseProject.DTOs;
+using WarehouseProject.DTOs.ReplenishmentDtos;
 using WarehouseProject.Models;
 namespace WarehouseProject.Services.Replenishment_Slotting
 {

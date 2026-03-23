@@ -17,17 +17,13 @@ public class WarehouseService : IWarehouseService
     }
 
     public async Task<List<WarehouseResponseDto>> GetAllAsync()
-
     {
-
-        return await _context.Warehouses
-
+        var warehouses = await _context.Warehouses
             .Include(w => w.Zones)
-
-            .Select(w => MapToResponseDto(w))
-
-            .ToListAsync();
-
+            .ToListAsync();   // ✅ STEP 1: DB call
+        return warehouses
+            .Select(w => MapToResponseDto(w)) // ✅ STEP 2: mapping in memory
+            .ToList();
     }
 
     public async Task<WarehouseResponseDto?> GetByIdAsync(int id)

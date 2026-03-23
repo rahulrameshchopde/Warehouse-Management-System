@@ -1,4 +1,4 @@
-﻿namespace WarehouseProject.DTOs
+﻿namespace WarehouseProject.DTOs.Register
 {
     public class TokenResponseDTO
     {
