@@ -15,11 +15,11 @@ namespace WarehouseProject.Models
 
         [Required, MaxLength(100)]
 
-        public string OrderNumber { get; set; } = string.Empty;
+        public string OrderNumber { get; set; }
 
         [Required, MaxLength(150)]
 
-        public string CustomerName { get; set; } = string.Empty;
+        public string CustomerName { get; set; }
 
         [MaxLength(300)]
 

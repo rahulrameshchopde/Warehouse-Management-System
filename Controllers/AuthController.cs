@@ -1,143 +1,110 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 using WarehouseProject.DTOs.Register;
 
-namespace WarehouseProject.Controllers
+[ApiController]
+
+[Route("api/[controller]")]
+
+public class AuthController : ControllerBase
 
 {
 
-    [ApiController]
+    private readonly IAuthService _authService;
 
-    [Route("api/[controller]")]
-
-    public class AuthController : ControllerBase
-
-       
+    public AuthController(IAuthService authService)
 
     {
-        private readonly IAuthService _authService;
 
-        private readonly IAuditLogService _auditLogService;
+        _authService = authService;
 
-        public AuthController(IAuthService authService, IAuditLogService auditLogService)
+    }
 
-        {
+    // ✅ LOGIN (PUBLIC)
 
-            _authService = authService;
+    [HttpPost("login")]
 
-            _auditLogService = auditLogService;
+    public async Task<IActionResult> Login(LoginDTO dto)
 
-        }
+    {
 
+        var token = await _authService.Login(dto);
 
-        // ✅ REGISTER (Public)
+        if (token == null)
 
-        [HttpPost("register")]
+            return Unauthorized("Invalid credentials");
 
-        public async Task<IActionResult> Register(RegisterUserDTO dto)
-        {
-            var result = await _authService.Register(dto);
+        return Ok(new { token });
 
-            if (!result)
+    }
 
-                return BadRequest("User already exists");
+    // 🔥 SUPER ADMIN → CREATE ANY USER
 
-            // ✅ ADD AUDIT HERE
+    [Authorize(Roles = "Admin")]
 
-            await _auditLogService.AddLog(
+    [HttpPost("Register")]
 
-                "Register",
+    public async Task<IActionResult> CreateUser(RegisterUserDTO dto)
 
-                "Auth",
+    {
 
-                $"User {dto.Email} registered"
+        var result = await _authService.Register(dto);
 
-            );
+        if (!result)
 
-            return Ok("User registered successfully");
+            return BadRequest("User exists");
 
-        }
+        return Ok("User created successfully");
 
+    }
 
+    // 🔥 GET USERS
 
-        // ✅ LOGIN (Public)
-        [HttpPost("login")]
+    [Authorize(Roles = "Admin")]
 
-        public async Task<IActionResult> Login(LoginDTO dto)
+    [HttpGet]
 
-        {
-            var token = await _authService.Login(dto);
-            await _auditLogService.AddLog(
-               "Login",
-               "Auth",
-               $"User {dto.Email} logged in"
-            );
-            return Ok(token);
+    public async Task<IActionResult> GetUsers()
 
-        }
+    {
 
-            // ✅ GET ALL USERS (Admin only)
+        return Ok(await _authService.GetAllUsers());
 
-            [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            var users = await _authService.GetAllUsers();
-            return Ok(users);
-        }
+    }
 
-        // ✅ GET USER BY ID (Admin only)
+    // 🔥 UPDATE
 
-        [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> GetUser(int id)
-        {
-            var user = await _authService.GetUserById(id);
-            if (user == null)
-                return NotFound();
+    [Authorize(Roles = "Admin")]
 
-            return Ok(user);
-        }
+    [HttpPut("update/{id}")]
 
-        // ✅ UPDATE USER (Admin only)
+    public async Task<IActionResult> UpdateUser(int id, UpdateUserDTO dto)
 
-        [HttpPut("{id}")]
+    {
 
-        [Authorize(Roles = "Admin")]
+        var result = await _authService.UpdateUser(id, dto);
 
-        public async Task<IActionResult> UpdateUser(int id, RegisterUserDTO dto)
+        if (!result)
 
-        {
+            return NotFound("User not found");
 
-            var result = await _authService.UpdateUser(id, dto);
+        return Ok("User updated successfully");
 
-            if (!result)
+    }
 
-                return NotFound("User not found");
+    // 🔥 DELETE
 
-            return Ok("User updated successfully");
+    [Authorize(Roles = "Admin")]
 
-        }
+    [HttpDelete("{id}")]
 
-        // ✅ DELETE USER (Admin only)
+    public async Task<IActionResult> DeleteUser(int id)
 
-        [HttpDelete("{id}")]
+    {
 
-        [Authorize(Roles = "Admin")]
-
-        public async Task<IActionResult> DeleteUser(int id)
-
-        {
-            var result = await _authService.DeleteUser(id);
-
-            if (!result)
-
-                return NotFound("User not found");
-
-            return Ok("User deleted successfully");
-
-        }
+        return Ok(await _authService.DeleteUser(id));
 
     }
 

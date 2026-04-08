@@ -58,6 +58,8 @@ namespace WarehouseProject.Controllers
 
         }
 
+
+
         [HttpPost]
 
         [Authorize(Roles = "Admin")]
@@ -76,6 +78,9 @@ namespace WarehouseProject.Controllers
 
         [Authorize(Roles = "Admin")]
 
+
+
+
         public async Task<IActionResult> Update(int id, WarehouseUpdateDto dto)
 
         {
@@ -85,6 +90,8 @@ namespace WarehouseProject.Controllers
             return Ok(result);
 
         }
+
+
 
         [HttpDelete("{id}")]
 

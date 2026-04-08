@@ -26,8 +26,8 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.AuthController",
-    "Method": "GetAllUsers",
+    "ContainingType": "AuthController",
+    "Method": "GetUsers",
     "RelativePath": "api/Auth",
     "HttpMethod": "GET",
     "IsController": true,
@@ -36,44 +36,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.AuthController",
-    "Method": "GetUser",
-    "RelativePath": "api/Auth/{id}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WarehouseProject.Controllers.AuthController",
-    "Method": "UpdateUser",
-    "RelativePath": "api/Auth/{id}",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "dto",
-        "Type": "WarehouseProject.DTOs.Register.RegisterUserDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "WarehouseProject.Controllers.AuthController",
+    "ContainingType": "AuthController",
     "Method": "DeleteUser",
     "RelativePath": "api/Auth/{id}",
     "HttpMethod": "DELETE",
@@ -89,7 +52,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.AuthController",
+    "ContainingType": "AuthController",
     "Method": "Login",
     "RelativePath": "api/Auth/login",
     "HttpMethod": "POST",
@@ -105,9 +68,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WarehouseProject.Controllers.AuthController",
-    "Method": "Register",
-    "RelativePath": "api/Auth/register",
+    "ContainingType": "AuthController",
+    "Method": "CreateUser",
+    "RelativePath": "api/Auth/Register",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -115,6 +78,27 @@
       {
         "Name": "dto",
         "Type": "WarehouseProject.DTOs.Register.RegisterUserDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthController",
+    "Method": "UpdateUser",
+    "RelativePath": "api/Auth/update/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "UpdateUserDTO",
         "IsRequired": true
       }
     ],
@@ -1151,7 +1135,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "WarehouseProject.DTOs.WarehouseReportDTO",
+        "Type": "WarehouseProject.DTOs.Notification.WarehouseReportDTO",
         "IsRequired": true
       }
     ],

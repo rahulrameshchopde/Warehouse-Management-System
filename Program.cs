@@ -35,9 +35,20 @@ builder.Services.AddDbContext<WarehouseDBContext>(options =>
 //    options.Cookie.IsEssential = true;
 //});
 
+
+// 🔹 CORS (IMPORTANT)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular", policy =>
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
+
+
 // DEPENDENCY INJECTION
 
-        builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
         builder.Services.AddScoped<IWarehouseService, WarehouseService>();
         builder.Services.AddScoped<IZoneService, ZoneService>();
         builder.Services.AddScoped<IBinLocationService, BinLocationService>();
@@ -155,11 +166,13 @@ builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 //app.UseSession();
 
-// MIDDLEWARE PIPELINE
- 
- 
 
-app.UseHttpsRedirection();
+
+// MIDDLEWARE PIPELINE
+app.UseCors("AllowAngular");
+
+
+// app.UseHttpsRedirection();
 
 app.UseAuthentication();   // IMPORTANT
 
