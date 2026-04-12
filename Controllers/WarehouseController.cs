@@ -30,7 +30,7 @@ namespace WarehouseProject.Controllers
 
         [HttpGet]
 
-        [Authorize(Roles = "Admin,Operator")]
+        [Authorize(Roles = "Admin,Supervisor")]
 
         public async Task<IActionResult> GetAll()
 
@@ -42,7 +42,7 @@ namespace WarehouseProject.Controllers
 
         [HttpGet("{id}")]
 
-        [Authorize(Roles = "Admin,Operator")]
+        [Authorize(Roles = "Admin,Supervisor")]
 
         public async Task<IActionResult> GetById(int id)
 
@@ -62,7 +62,7 @@ namespace WarehouseProject.Controllers
 
         [HttpPost]
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Supervisor")]
 
         public async Task<IActionResult> Create(WarehouseCreateDto dto)
 

@@ -19,18 +19,28 @@ public class InventoryBalanceService : IInventoryBalanceService
     public async Task<IEnumerable<InventoryBalanceResponseDTO>> GetAll()
     {
         return await _context.InventoryBalances
+
+            .Include(x => x.Item)           // ✅ ADD THIS
+            .Include(x => x.BinLocation)    // ✅ ADD THIS
             .Select(x => new InventoryBalanceResponseDTO
-            {
-                BalanceID = x.BalanceID,
-                ItemID = x.ItemID,
-                BinID = x.BinID,
-                QuantityOnHand = x.QuantityOnHand,
-                ReservedQuantity = x.ReservedQuantity
-            }).ToListAsync();
+    {
+
+             BalanceID = x.BalanceID,
+             ItemID = x.ItemID,
+             BinID = x.BinID,
+             ItemName = x.Item.Name,          // ✅ correct
+             BinCode = x.BinLocation.Code,    // ✅ correct
+             QuantityOnHand = x.QuantityOnHand,
+             ReservedQuantity = x.ReservedQuantity
+
+    })
+
+    .ToListAsync();
+
     }
-    
+
     // ✅ GET BY ID
-    
+
     public async Task<InventoryBalanceResponseDTO> GetById(int id)
     {
         return await _context.InventoryBalances

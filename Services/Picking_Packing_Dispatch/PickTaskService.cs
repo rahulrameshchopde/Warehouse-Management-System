@@ -209,60 +209,67 @@ public class PickTaskService : IPickTaskService
         {
 
             var pick = await _context.PickTasks.FindAsync(id);
-
             if (pick == null) return null;
-
             var oldStatus = pick.Status;
-
             pick.Status = dto.Status;
+            
 
             // ✅ FIXED CONDITION
 
             if (oldStatus != PickTaskStatus.Completed &&
-
-                dto.Status == PickTaskStatus.Completed)
+               dto.Status == PickTaskStatus.Completed)
 
             {
-
                 var inventory = await _context.InventoryBalances
-
                     .FirstOrDefaultAsync(x =>
-
                         x.ItemID == pick.ItemID &&
-
                         x.BinID == pick.BinID);
 
                 if (inventory == null)
-
                     throw new Exception("Inventory not found");
 
                 if (inventory.ReservedQuantity < pick.PickQuantity)
-
                     throw new Exception("Reserved quantity issue");
 
                 // ✅ update stock
 
                 inventory.ReservedQuantity -= pick.PickQuantity;
-
                 inventory.QuantityOnHand -= pick.PickQuantity;
 
                 // 🔥 ✅ ADD NOTIFICATION HERE
 
                 await _notificationService.CreateAsync(
-
-                    1,
-
+                    6,
                     $"Order {pick.OrderID} Picking Completed",
-
                     NotificationCategory.Picking
 
-                );
+);
+
 
             }
 
             await _context.SaveChangesAsync();
 
             return await MapToDto(id);
+
+        }
+
+
+        public bool DeletePickTask(int id)
+
+        {
+
+            var task = _context.PickTasks.Find(id);
+
+            if (task == null)
+
+                return false;
+
+            _context.PickTasks.Remove(task);
+
+            _context.SaveChanges();
+
+            return true;
 
         }
 

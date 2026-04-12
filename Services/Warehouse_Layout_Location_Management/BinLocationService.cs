@@ -22,7 +22,8 @@ namespace WarehouseProject.Services
                 ZoneID = b.ZoneID,
                 Code = b.Code,
                 Capacity = b.Capacity,
-            
+                Status = b.Status.ToString()
+
             });
         }
         // ✅ GET BY ID
@@ -36,7 +37,8 @@ namespace WarehouseProject.Services
                 ZoneID = b.ZoneID,
                 Code = b.Code,
                 Capacity = b.Capacity,
-              
+                Status = b.Status.ToString()
+
             };
         }
         // ✅ CREATE

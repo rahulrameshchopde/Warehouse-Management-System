@@ -10,9 +10,9 @@ namespace WarehousePro.API.Services.Interfaces
 
         Task<PickTaskResponseDto> CreatePickAsync(PickTaskCreateDto dto);
 
+        bool DeletePickTask(int id);
 
-
-        Task<List<PickTaskResponseDto>> GetAllAsync();
+        Task <List<PickTaskResponseDto>> GetAllAsync();
 
         Task<PickTaskResponseDto?> UpdateStatusAsync(int id, PickTaskUpdateDto dto);
 

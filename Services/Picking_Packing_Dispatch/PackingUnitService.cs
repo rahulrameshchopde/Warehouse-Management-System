@@ -71,15 +71,15 @@ public class PackingService : IPackingUnitService
 
         // 🔥 ✅ ADD NOTIFICATION HERE
 
-        await _notificationService.CreateAsync(
+        //await _notificationService.CreateAsync(
 
-            1, // userId (static for now)
+        //    1, // userId (static for now)
 
-            $"Order {dto.OrderID} Packed Successfully",
+        //    $"Order {dto.OrderID} Packed Successfully",
 
-            NotificationCategory.Picking
+        //    NotificationCategory.Picking
 
-        );
+        //);
 
         await _context.SaveChangesAsync();
 
@@ -132,6 +132,25 @@ public class PackingService : IPackingUnitService
 
     // ✅ UPDATE STATUS (SHIPPING FLOW)
 
+    public async Task<bool> DeleteAsync(int id)
+
+    {
+
+        var pack = await _context.PackingUnits.FindAsync(id);
+
+        if (pack == null)
+
+            return false;
+
+        _context.PackingUnits.Remove(pack);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+
+    }
+
+
     public async Task<PackingResponseDto?> UpdateAsync(int id, PackingStatusUpdateDto dto)
 
     {
@@ -162,6 +181,9 @@ public class PackingService : IPackingUnitService
 
         }
 
+
+
+
         await _context.SaveChangesAsync();
 
         return new PackingResponseDto
@@ -179,6 +201,8 @@ public class PackingService : IPackingUnitService
             Status = pack.Status.ToString()
 
         };
+
+
 
     }
 

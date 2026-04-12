@@ -21,7 +21,8 @@ public class ItemService : IItemService
                 SKU = i.SKU,
                 Description = i.Description,
                 UnitOfMeasure = i.UnitOfMeasure,
-               
+                Status = i.Status.ToString()
+
             }).ToListAsync();
     }
     // ✅ GET BY ID
@@ -36,7 +37,8 @@ public class ItemService : IItemService
                 SKU = i.SKU,
                 Description = i.Description,
                 UnitOfMeasure = i.UnitOfMeasure,
-               
+                Status = i.Status.ToString()
+
             }).FirstOrDefaultAsync();
     }
     // ✅ CREATE (Duplicate check)
@@ -52,6 +54,7 @@ public class ItemService : IItemService
             Description = dto.Description,
             UnitOfMeasure = dto.UnitOfMeasure,
             
+
         };
         _context.Items.Add(item);
         await _context.SaveChangesAsync();

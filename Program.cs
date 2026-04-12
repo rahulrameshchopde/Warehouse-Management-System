@@ -83,6 +83,22 @@ opt.JsonSerializerOptions.Converters
 
 
 
+// enum 
+
+builder.Services.AddControllers()
+
+.AddJsonOptions(options =>
+
+{
+
+    options.JsonSerializerOptions.Converters
+
+        .Add(new JsonStringEnumConverter());
+
+});
+
+
+
 
 // JWT AUTHENTICATION
 
@@ -99,7 +115,7 @@ builder.Services.AddAuthentication(options =>
 
 })
 
-        .AddJwtBearer(options =>
+        .AddJwtBearer("Bearer",options =>
 
         {
 

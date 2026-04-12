@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 using WarehouseProject.Models;
 
@@ -11,6 +12,7 @@ namespace WarehouseProject.Controllers
     [Route("api/[controller]")]
 
     [ApiController]
+    [Authorize(Roles = "Admin,Supervisor,Operator")]
 
     public class BinLocationController : ControllerBase
 

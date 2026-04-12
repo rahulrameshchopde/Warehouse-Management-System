@@ -5,7 +5,7 @@ using WarehouseProject.Models;
 public interface IAuthService
 
 {
-
+    public string UserRole { get; set; }
     Task<bool> Register(RegisterUserDTO dto);
     Task<string> Login(LoginDTO dto);
     

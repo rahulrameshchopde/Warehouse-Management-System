@@ -36,7 +36,7 @@ public class AuthController : ControllerBase
 
             return Unauthorized("Invalid credentials");
 
-        return Ok(new { token });
+        return Ok(new {token= token,role=_authService.UserRole });
 
     }
 
@@ -54,9 +54,9 @@ public class AuthController : ControllerBase
 
         if (!result)
 
-            return BadRequest("User exists");
+            return BadRequest( new { message = "User exists" });
 
-        return Ok("User created successfully");
+        return Ok(new {message= "User created successfully" });
 
     }
 

@@ -10,8 +10,6 @@ namespace WarehousePro.API.DTOs.Outbound
 
     {
 
-        public int? AssignedToUserID { get; set; }
-
         [Required]
 
         public PickTaskStatus Status { get; set; }

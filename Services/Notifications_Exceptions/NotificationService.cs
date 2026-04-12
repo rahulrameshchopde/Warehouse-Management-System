@@ -39,7 +39,6 @@ namespace WarehouseProject.Services
             };
 
             _context.Notifications.Add(notification);
-
             await _context.SaveChangesAsync();
 
         }

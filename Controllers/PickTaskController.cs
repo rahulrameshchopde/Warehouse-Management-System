@@ -77,6 +77,26 @@ namespace WarehouseProject.Controllers
 
         }
 
+
+
+        [HttpDelete("{id}")]
+
+        public IActionResult Delete(int id)
+
+        {
+
+            var result = _service.DeletePickTask(id);
+
+            if (!result)
+
+                return NotFound();
+
+            return Ok("Deleted");
+
+        }
+
+
+
         // ✅ UPDATE STATUS (AUTO INVENTORY REDUCE HERE 🔥)
 
         [HttpPut("status/{id}")]

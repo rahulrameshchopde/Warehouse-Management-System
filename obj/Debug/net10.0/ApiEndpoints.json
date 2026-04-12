@@ -665,6 +665,22 @@
   },
   {
     "ContainingType": "WarehouseProject.Controllers.PackingController",
+    "Method": "Delete",
+    "RelativePath": "api/Packing/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.PackingController",
     "Method": "UpdateStatus",
     "RelativePath": "api/Packing/status/{id}",
     "HttpMethod": "PUT",
@@ -708,6 +724,22 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WarehouseProject.Controllers.PickTaskController",
+    "Method": "Delete",
+    "RelativePath": "api/PickTask/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

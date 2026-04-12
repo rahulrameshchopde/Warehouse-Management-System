@@ -18,6 +18,8 @@ public class AuthService : IAuthService
 
 {
 
+    public string UserRole { get; set; }
+
     private readonly WarehouseDBContext _context;
 
     private readonly IConfiguration _config;
@@ -56,9 +58,9 @@ public class AuthService : IAuthService
 
             "Supervisor",
 
-            "Planner",
+            "InventoryPlanner",
 
-            "Coordinator"
+            "Logistics"
 
         };
 
@@ -203,6 +205,7 @@ public class AuthService : IAuthService
             new Claim(ClaimTypes.Role, user.Role)
 
         };
+        UserRole = user.Role;
 
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(

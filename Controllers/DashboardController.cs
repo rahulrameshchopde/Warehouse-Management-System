@@ -6,7 +6,7 @@ namespace WarehouseProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Supervisor")]
+    [Authorize(Roles = "Admin,Supervisor,Operator,InventoryPlanner,Logistics")]
     public class DashboardController : ControllerBase
     {
         private readonly IDashboardService _service;
